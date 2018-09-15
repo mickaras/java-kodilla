@@ -1,5 +1,7 @@
 package com.kodilla.testing.library;
 
+import java.util.ArrayList;
+
 public class LibraryUser {
     String firstname;
     String lastname;
