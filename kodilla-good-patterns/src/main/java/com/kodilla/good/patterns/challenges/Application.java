@@ -5,7 +5,7 @@ public class Application {
         OrderRequestRetriver orderRequestRetriver = new OrderRequestRetriver();
         OrderRequest orderRequest = orderRequestRetriver.retrieve();
 
-        OrderProcessor orderProcessor = new OrderProcessor(new MailService(), new KapcieOrderService(), new KapcieOrderRepository());
+        OrderProcessor orderProcessor = new OrderProcessor(new MailService(), new SlippersOrderService(), new SlippersOrderRepository());
         orderProcessor.process(orderRequest);
     }
 }
