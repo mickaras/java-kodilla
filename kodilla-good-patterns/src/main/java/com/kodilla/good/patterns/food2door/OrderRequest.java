@@ -2,13 +2,19 @@ package com.kodilla.good.patterns.food2door;
 
 public class OrderRequest {
     private User user;
+    private Producer producer;
     private Item item;
-    private int quantity;
+    private double quantity;
 
-    public OrderRequest(User user, Item item, int quantity) {
+    public OrderRequest(User user, Producer producer, Item item, double quantity) {
         this.user = user;
+        this.producer = producer;
         this.item = item;
         this.quantity = quantity;
+    }
+
+    public void process(){
+        producer.process(new OrderRequest(user, producer, item, quantity));
     }
 
     public User getUser() {
@@ -19,7 +25,10 @@ public class OrderRequest {
         return item;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
+    }
+    public Producer getProducer(){
+        return producer;
     }
 }
