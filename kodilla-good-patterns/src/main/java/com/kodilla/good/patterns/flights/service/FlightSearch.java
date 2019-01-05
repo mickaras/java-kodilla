@@ -33,7 +33,7 @@ public class FlightSearch {
                 .filter(t -> !t.getArrivalAirport().equals(target))
                 .forEach(midAirports::addFlight);
         System.out.println();
-        for(Relation relation:midAirports.getFlights()){
+        /*for(Relation relation:midAirports.getFlights()){
             flightDatabase.getFlights()
                     .stream()
                     .filter(t-> t.getTimeTable()
@@ -44,7 +44,7 @@ public class FlightSearch {
                                     .flatMap(w->w.getArrivalTime()))))
                                     .collect(Collectors.toList());
 
-        }
+        }*/
         flightDatabase.getFlights()
                 .stream()
                 .filter(t -> !t.getDepartureAirport().equals(departure))
