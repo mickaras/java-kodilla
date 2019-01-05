@@ -21,6 +21,6 @@ public class TimeTable {
     public String toString() {
         return "leaves on " +
                  departureTime +
-                " arrives on " + arrivalTime;
+                " arrives on " + arrivalTime+'\n';
     }
 }

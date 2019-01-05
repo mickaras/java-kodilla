@@ -1,45 +1,51 @@
 package com.kodilla.good.patterns.flights.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class FlightDatabase {
-    private HashMap<Relation, ArrayList<TimeTable>> flights = new HashMap<Relation, ArrayList<TimeTable>>();
-
+    private ArrayList<Relation> flights = new ArrayList<>();
+    public static String KRAKOW = "Krakow";
+    public static String GDANSK = "Gdansk";
+    public static String WARSAW = "Warsaw";
+    public static String WROCLAW = "Wroclaw";
     public void populateDatabase() {
-        Relation relationKraWro = new Relation(Airports.KRAKOW, Airports.WROCLAW);
-        Relation relationKraWaw = new Relation(Airports.KRAKOW, Airports.WARSAW);
-        Relation relationKraGda = new Relation(Airports.KRAKOW, Airports.GDANSK);
-        Relation relationWroKra = new Relation(Airports.WROCLAW, Airports.KRAKOW);
-        Relation relationWroWaw = new Relation(Airports.WROCLAW, Airports.WARSAW);
-        Relation relationWroGda = new Relation(Airports.WROCLAW, Airports.GDANSK);
-        Relation relationGdaKra = new Relation(Airports.GDANSK, Airports.KRAKOW);
-        Relation relationGdaWro = new Relation(Airports.GDANSK, Airports.WROCLAW);
-        Relation relationGdaWaw = new Relation(Airports.GDANSK, Airports.WARSAW);
-        Relation relationWawKra = new Relation(Airports.WARSAW, Airports.KRAKOW);
-        Relation relationWawWro = new Relation(Airports.WARSAW, Airports.WROCLAW);
-        Relation relationWawGda = new Relation(Airports.WARSAW, Airports.GDANSK);
         ArrayList<TimeTable> timeTable1 = new ArrayList<>();
         timeTable1.add(new TimeTable(new ShortDate(Day.MONDAY,9,15), new ShortDate(Day.MONDAY,10,20)));
-        timeTable1.add(new TimeTable(new ShortDate(Day.MONDAY,10,15), new ShortDate(Day.MONDAY,11,20)));
         timeTable1.add(new TimeTable(new ShortDate(Day.MONDAY,11,15), new ShortDate(Day.MONDAY,12,20)));
         timeTable1.add(new TimeTable(new ShortDate(Day.MONDAY,12,15), new ShortDate(Day.MONDAY,13,20)));
-        timeTable1.add(new TimeTable(new ShortDate(Day.MONDAY,13,15), new ShortDate(Day.MONDAY,14,20)));
         timeTable1.add(new TimeTable(new ShortDate(Day.MONDAY,14,15), new ShortDate(Day.MONDAY,15,20)));
-        timeTable1.add(new TimeTable(new ShortDate(Day.MONDAY,15,15), new ShortDate(Day.MONDAY,16,20)));
-        flights.put(relationGdaKra,timeTable1);
-        flights.put(relationGdaWaw,timeTable1);
-        flights.put(relationGdaWro,timeTable1);
-        flights.put(relationKraGda,timeTable1);
-        flights.put(relationKraWaw,timeTable1);
-        flights.put(relationKraWro,timeTable1);
-        flights.put(relationWawGda,timeTable1);
-        flights.put(relationWawWro,timeTable1);
-        flights.put(relationWroWaw,timeTable1);
+        Relation relationKraWro = new Relation(KRAKOW, WROCLAW, timeTable1);
+        Relation relationKraWaw = new Relation(KRAKOW, WARSAW, timeTable1);
+        Relation relationKraGda = new Relation(KRAKOW, GDANSK, timeTable1);
+        Relation relationWroKra = new Relation(WROCLAW, KRAKOW, timeTable1);
+        Relation relationWroWaw = new Relation(WROCLAW, WARSAW, timeTable1);
+        Relation relationWroGda = new Relation(WROCLAW, GDANSK, timeTable1);
+        Relation relationGdaKra = new Relation(GDANSK, KRAKOW, timeTable1);
+        Relation relationGdaWro = new Relation(GDANSK, WROCLAW, timeTable1);
+        Relation relationGdaWaw = new Relation(GDANSK, WARSAW, timeTable1);
+        Relation relationWawKra = new Relation(WARSAW, KRAKOW, timeTable1);
+        Relation relationWawWro = new Relation(WARSAW, WROCLAW, timeTable1);
+        Relation relationWawGda = new Relation(WARSAW, GDANSK, timeTable1);
+        flights.add(relationKraWro);
+        flights.add(relationKraWaw);
+        flights.add(relationKraGda);
+        flights.add(relationWroKra);
+        flights.add(relationWroWaw);
+        flights.add(relationWroGda);
+        flights.add(relationGdaKra);
+        flights.add(relationGdaWro);
+        flights.add(relationGdaWaw);
+        flights.add(relationWawKra);
+        flights.add(relationWawWro);
+        flights.add(relationWawGda);
     }
 
 
-    public HashMap<Relation, ArrayList<TimeTable>> getFlights() {
+    public ArrayList<Relation> getFlights() {
         return flights;
+    }
+    public void addFlight(Relation relation){
+        flights.add(relation);
     }
 }

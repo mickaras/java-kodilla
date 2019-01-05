@@ -1,22 +1,29 @@
 package com.kodilla.good.patterns.flights.service;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Relation {
-    private Airports departureAirport;
-    private Airports arrivalAirport;
+    private String departureAirport;
+    private String arrivalAirport;
+    private ArrayList<TimeTable> timeTable;
 
-    public Relation(Airports departureAirport, Airports arrivalAirport) {
+    public Relation(String departureAirport, String arrivalAirport, ArrayList<TimeTable> timeTable) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
+        this.timeTable = timeTable;
     }
 
-    public Airports getDepartureAirport() {
+    public String getDepartureAirport() {
         return departureAirport;
     }
 
-    public Airports getArrivalAirport() {
+    public String getArrivalAirport() {
         return arrivalAirport;
+    }
+
+    public ArrayList<TimeTable> getTimeTable() {
+        return timeTable;
     }
 
     @Override
@@ -30,6 +37,11 @@ public class Relation {
 
     @Override
     public int hashCode() {
-        return Objects.hash(departureAirport, arrivalAirport);
+        return Objects.hash(departureAirport, arrivalAirport, timeTable);
+    }
+
+    @Override
+    public String toString() {
+        return "Flight from " + departureAirport + " to " + arrivalAirport +" "+ timeTable.toString();
     }
 }

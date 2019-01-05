@@ -1,8 +1,5 @@
 package com.kodilla.good.patterns.flights.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FlightSearch {
@@ -11,40 +8,48 @@ public class FlightSearch {
     public FlightSearch() {
         flightDatabase.populateDatabase();
     }
-    public void printDestinationsFromAirport(Airports airports){
-        flightDatabase.getFlights().entrySet()
+    public void printDestinationsFromAirport(String airports){
+        flightDatabase.getFlights()
                 .stream()
-                .filter(t -> t.getKey().getDepartureAirport() == airports)
-                .forEach(System.out::println);
+                .filter(t -> t.getDepartureAirport().equals(airports))
+                .forEach(t -> System.out.println("Departures from "+t.getDepartureAirport()+" to "+t.getArrivalAirport()+": "+t.getTimeTable().stream().map(TimeTable::getDepartureTime).collect(Collectors.toList())));
     }
-    public void printArrivalsToAirport(Airports airports){
-        flightDatabase.getFlights().entrySet().stream()
-                .filter(t -> t.getKey().getArrivalAirport()==airports)
-                .forEach(t -> System.out.println("Flight to: "+t.getKey().getArrivalAirport()+" from: "+t.getKey().getDepartureAirport()+" arrives on: "+t.getValue().toString()));
+    public void printArrivalsToAirport(String airports){
+        flightDatabase.getFlights().stream()
+                .filter(t -> t.getArrivalAirport().equals(airports))
+                .forEach(t -> System.out.println("Arrivals to "+t.getArrivalAirport()+" from "+t.getDepartureAirport()+": "+t.getTimeTable().stream().map(TimeTable::getArrivalTime).collect(Collectors.toList())));
     }
-    public void searchFlights(Airports departure, Airports target){
+    public void searchFlights(String departure, String target){
         FlightDatabase midAirports = new FlightDatabase();
-        flightDatabase.getFlights().entrySet()
+        flightDatabase.getFlights()
                 .stream()
-                .filter(t -> t.getKey().getDepartureAirport()==departure)
-                .filter(t -> t.getKey().getArrivalAirport()==target)
-                .forEach(t -> System.out.println("Direct flights from: "+t.getKey().getDepartureAirport()+" to: "+t.getKey().getArrivalAirport()+
-                        t.getValue().toString()));
-        midAirports = flightDatabase.getFlights().entrySet()
+                .filter(t -> t.getDepartureAirport().equals(departure))
+                .filter(t -> t.getArrivalAirport().equals(target))
+                .forEach(t -> System.out.println("Direct flights from "+t.getDepartureAirport()+" to "+t.getArrivalAirport()+
+                        t.getTimeTable().toString()));
+        flightDatabase.getFlights()
                 .stream()
-                .filter(t -> t.getKey().getDepartureAirport()==departure)
-                .filter(t -> t.getKey().getArrivalAirport()!=target)
-                .collect(Collectors.toMap(Map.Entry));
+                .filter(t -> t.getDepartureAirport().equals(departure))
+                .filter(t -> !t.getArrivalAirport().equals(target))
+                .forEach(midAirports::addFlight);
         System.out.println();
-        flightDatabase.getFlights().entrySet()
+        for(Relation relation:midAirports.getFlights()){
+            flightDatabase.getFlights()
+                    .stream()
+                    .filter(t-> t.getTimeTable()
+                            .stream()
+                            .map(u->u.getDepartureTime())
+                            .filter(v -> v.transferTime(relation.getTimeTable()
+                                    .stream()
+                                    .flatMap(w->w.getArrivalTime()))))
+                                    .collect(Collectors.toList());
+
+        }
+        flightDatabase.getFlights()
                 .stream()
-                .filter(t -> {
-                    for (Flight flight:midAirports.getFlights().entrySet()) {
-                        flight.getArrivalAirport()==t.getKey().getDepartureAirport();
-                    }
-                })
-                .filter(t -> t.getKey().getArrivalAirport()==target)
-                .forEach(System.out::println);
+                .filter(t -> !t.getDepartureAirport().equals(departure))
+                .filter(t -> t.getArrivalAirport().equals(target))
+                .forEach(t -> System.out.println("Flight from "+departure+" through "+t.getDepartureAirport()+" to "+target+": "));
     }
 
 }
